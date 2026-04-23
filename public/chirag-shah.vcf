@@ -1,0 +1,25 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Chirag D. Shah
+N:Shah;Chirag;D.;;
+ORG:Crestwood Digital
+TITLE:Founder & Principal Consultant
+EMAIL;type=INTERNET;type=WORK;type=pref:chirag@crestwood.digital
+EMAIL;type=INTERNET;type=HOME:chirag.dilip.shah@gmail.com
+EMAIL;type=INTERNET;type=OTHER:chirag@questioneverythingetp.com
+TEL;type=CELL;type=VOICE:+1-201-616-9417
+URL:https://chiragdshah.com
+item1.URL:https://www.linkedin.com/in/chiragdshah/
+item1.X-ABLabel:LinkedIn
+item2.URL:https://x.com/chiragdshah
+item2.X-ABLabel:X
+item3.URL:https://github.com/chiragdshah
+item3.X-ABLabel:GitHub
+item4.URL:https://cshah.substack.com/
+item4.X-ABLabel:Substack
+item5.URL:https://questioneverythingetp.com/
+item5.X-ABLabel:Podcast
+item6.URL:https://calendly.com/chirag-crestwood/30min
+item6.X-ABLabel:Book a Call
+NOTE:Applied Polymath — systems\, writing\, and the questions between. chiragdshah.com
+END:VCARD
