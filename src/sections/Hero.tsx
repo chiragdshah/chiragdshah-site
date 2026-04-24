@@ -77,9 +77,9 @@ export function Hero() {
       <motion.div
         aria-hidden
         style={{ y: headshotY, opacity: headshotOpacity }}
-        className="pointer-events-none absolute right-[-4%] top-0 z-0 hidden md:block lg:right-[2%]"
+        className="pointer-events-none absolute right-0 top-0 z-0 hidden md:block"
       >
-        <div className="relative h-[70vh] max-h-[640px] w-[min(42vw,520px)]">
+        <div className="relative h-[40vh] max-h-[320px] w-[min(28vw,280px)] lg:max-h-[400px] lg:w-[min(26vw,360px)] xl:max-h-[560px] xl:w-[min(30vw,500px)] 2xl:max-h-[760px] 2xl:w-[min(34vw,720px)]">
           <img
             src={headshot}
             alt=""
