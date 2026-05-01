@@ -31,7 +31,7 @@ function App() {
           <LetsConnect />
           <footer className="flex flex-col items-center gap-1 py-10 text-center font-body text-sm text-brown/60">
             <div>© {new Date().getFullYear()} Chirag D. Shah</div>
-            <div>Built with blueprints, pour-overs & curiosity.</div>
+            <div>Built with sketchbooks, pour-overs, & curiosity.</div>
             <div className="text-brown/40">
               (okay, really: Claude Code, React, Vite & Tailwind —{" "}
               <a

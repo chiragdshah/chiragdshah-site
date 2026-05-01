@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Section } from "../components/Section";
 import { Parallax } from "../components/motion/Parallax";
 import { SystemDiagram } from "../components/sketches/SystemDiagram";
@@ -11,7 +12,7 @@ type Item = {
   href: string;
 };
 
-const items: Item[] = [
+const FALLBACK_ITEMS: Item[] = [
   {
     channel: "ESSAY",
     source: "The Pattern Seeker",
@@ -70,7 +71,36 @@ function CurrentlyCard({ item }: { item: Item }) {
   );
 }
 
+const CHANNEL_ORDER: Item["channel"][] = ["ESSAY", "DISPATCH", "PODCAST"];
+
+function orderByChannel(items: Item[]): Item[] {
+  return [...items].sort(
+    (a, b) => CHANNEL_ORDER.indexOf(a.channel) - CHANNEL_ORDER.indexOf(b.channel),
+  );
+}
+
 export function Currently() {
+  const [items, setItems] = useState<Item[]>(FALLBACK_ITEMS);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/latest")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (cancelled || !data?.items?.length) return;
+        const byChannel = new Map<Item["channel"], Item>();
+        for (const item of data.items as Item[]) byChannel.set(item.channel, item);
+        const merged = FALLBACK_ITEMS.map((fb) => byChannel.get(fb.channel) ?? fb);
+        setItems(orderByChannel(merged));
+      })
+      .catch(() => {
+        // keep fallback
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <div className="relative">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -87,7 +117,7 @@ export function Currently() {
         </p>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {items.map((item) => (
-            <CurrentlyCard key={item.source} item={item} />
+            <CurrentlyCard key={item.channel} item={item} />
           ))}
         </div>
       </Section>
