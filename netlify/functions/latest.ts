@@ -1,6 +1,10 @@
 const SUBSTACK_FEED = "https://cshah.substack.com/feed";
-const YOUTUBE_CHANNEL_ID = "UC2aiyplnabkJ7YzfWK1yISw";
-const YOUTUBE_FEED = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
+// Question Everything full-episodes playlist (excludes Shorts, which live in a
+// separate playlist). Filtering by playlist is more reliable than detecting
+// /shorts/ URLs from the channel-wide feed, since the channel feed can be
+// dominated by shorts and push full episodes out of the recent-items window.
+const YOUTUBE_PLAYLIST_ID = "PL5htsjagv9d-U-Ih1gMvIGlGlH84Ktbpg";
+const YOUTUBE_FEED = `https://www.youtube.com/feeds/videos.xml?playlist_id=${YOUTUBE_PLAYLIST_ID}`;
 
 const DISPATCH_DESCRIPTION =
   "The week's signal in the noise — what's worth knowing from what I've read, seen, heard, built, and written.";
@@ -110,13 +114,22 @@ async function fetchSubstack(): Promise<{ essay: Item | null; dispatch: Item | n
 
 async function fetchYouTube(): Promise<Item | null> {
   const xml = await fetchText(YOUTUBE_FEED);
-  const entry = xml.match(/<entry\b[\s\S]*?<\/entry>/)?.[0];
-  if (!entry) return null;
+  const entries = [...xml.matchAll(/<entry\b[\s\S]*?<\/entry>/g)].map((m) => m[0]);
+  if (!entries.length) return null;
 
-  const title = extract(entry, "title");
-  const videoId = extract(entry, "yt:videoId");
-  const published = extract(entry, "published");
-  const mediaDesc = extract(entry, "media:description");
+  const latest = entries
+    .map((entry) => ({
+      entry,
+      publishedMs: new Date(extract(entry, "published")).getTime(),
+    }))
+    .filter((e) => !Number.isNaN(e.publishedMs))
+    .sort((a, b) => b.publishedMs - a.publishedMs)[0]?.entry;
+  if (!latest) return null;
+
+  const title = extract(latest, "title");
+  const videoId = extract(latest, "yt:videoId");
+  const published = extract(latest, "published");
+  const mediaDesc = extract(latest, "media:description");
   if (!title || !videoId) return null;
 
   return {
