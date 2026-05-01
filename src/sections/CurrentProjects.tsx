@@ -63,7 +63,7 @@ const publishing: Project[] = [
   },
 ];
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, wide }: { project: Project; wide?: boolean }) {
   const body = (
     <>
       <div className="flex items-start justify-between gap-3">
@@ -80,20 +80,22 @@ function ProjectCard({ project }: { project: Project }) {
     </>
   );
 
+  const cardClass = `card-paper${wide ? " card-paper-wide" : ""}`;
+
   if (project.href) {
     return (
       <a
         href={project.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="card-glass block rounded-lg p-6 transition hover:-translate-y-0.5"
+        className={`${cardClass} block rounded-lg p-6 transition hover:-translate-y-0.5`}
       >
         {body}
       </a>
     );
   }
 
-  return <article className="card-glass rounded-lg p-6">{body}</article>;
+  return <article className={`${cardClass} rounded-lg p-6`}>{body}</article>;
 }
 
 function GroupHeader({ label }: { label: string }) {
@@ -117,7 +119,7 @@ export function CurrentProjects() {
       </div>
       <Section id="projects" eyebrow="// on the workbench" title="Active Projects">
         <GroupHeader label="running" />
-        <ProjectCard project={running} />
+        <ProjectCard project={running} wide />
 
         <GroupHeader label="building" />
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

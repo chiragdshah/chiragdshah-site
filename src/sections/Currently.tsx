@@ -49,7 +49,7 @@ function CurrentlyCard({ item }: { item: Item }) {
       href={item.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="card-glass group flex flex-col rounded-lg p-6 transition hover:-translate-y-0.5"
+      className="card-paper group flex flex-col rounded-lg p-6 transition hover:-translate-y-0.5"
     >
       <div className="flex items-center justify-between gap-3">
         <span className="rounded-full border border-brown/30 px-2.5 py-0.5 font-hand text-[10px] uppercase tracking-widest text-brown-accent">

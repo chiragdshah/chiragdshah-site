@@ -15,7 +15,7 @@ export function LetsConnect() {
       </div>
       <Section id="connect" eyebrow="// get in touch" title="Let's Connect">
         <div className="mx-auto grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2 md:gap-20">
-          <div className="card-glass rounded-xl p-8">
+          <div className="card-paper rounded-xl p-8">
             <h3 className="font-hand text-2xl uppercase tracking-wider text-brown">Work together</h3>
             <p className="mt-3 font-body text-brown/80">
               For advisory, builds, and collaborations. The kinds of things
@@ -30,7 +30,7 @@ export function LetsConnect() {
               Book a call
             </a>
           </div>
-          <div className="card-glass rounded-xl p-8">
+          <div className="card-paper rounded-xl p-8">
             <h3 className="font-hand text-2xl uppercase tracking-wider text-brown">Elsewhere</h3>
             <ul className="mt-4 space-y-2 font-body text-brown/90">
               <li>

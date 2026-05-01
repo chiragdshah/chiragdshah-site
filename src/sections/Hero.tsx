@@ -99,9 +99,11 @@ export function Hero() {
         initial={{ opacity: 0, x: -16 }}
         animate={{ opacity: 0.9, x: 0 }}
         transition={{ duration: 0.7, delay: 0.7 }}
-        className="absolute left-[2%] top-[58%] z-10 hidden w-[min(22vw,280px)] -translate-y-1/2 -rotate-[1.2deg] rounded-sm border border-brown/15 bg-cream-50/70 p-5 shadow-[0_6px_20px_rgba(99,72,50,0.08)] backdrop-blur-[2px] lg:block"
+        className="absolute left-[2%] top-[58%] z-10 hidden w-[min(22vw,280px)] -translate-y-1/2 -rotate-[1.2deg] lg:block"
       >
-        <DictionaryEntry />
+        <div className="card-paper p-5">
+          <DictionaryEntry />
+        </div>
         <svg
           aria-hidden
           className="pointer-events-none absolute -top-[44px] -right-[64px] h-[64px] w-[90px] text-brown-accent/65"
@@ -193,7 +195,7 @@ export function Hero() {
               transition={{ duration: 0.9, delay: 0.7, ease: "easeInOut" }}
             />
           </svg>
-          <div className="rounded-sm border border-brown/15 bg-cream-50/75 p-4 shadow-[0_4px_14px_rgba(99,72,50,0.08)]">
+          <div className="card-paper p-4">
             <DictionaryEntry />
           </div>
         </motion.div>

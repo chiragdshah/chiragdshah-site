@@ -18,7 +18,7 @@ export function SignalCheck() {
         eyebrow="// the newsletter"
         title="Signal Check"
       >
-        <div className="card-glass mx-auto max-w-2xl rounded-xl p-8 md:p-12">
+        <div className="card-paper mx-auto max-w-2xl rounded-xl p-8 md:p-12">
           <p className="font-body text-lg leading-relaxed text-brown/90">
             Signal Check is where I surface the signal in the noise. The best
             of what's worth knowing from the week — what I've read, seen,
