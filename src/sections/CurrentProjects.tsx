@@ -16,13 +16,6 @@ const running: Project = {
 
 const building: Project[] = [
   {
-    name: "METS MISERY MADNESS",
-    description:
-      "An interactive 64-team bracket tournament through the most miserable moments in Mets history. Which calamity hurt more?",
-    status: "Live",
-    href: "/metsmiserymadness",
-  },
-  {
     name: "STET",
     description: "The AI editorial teammate inside Slack.",
     status: "Pilot",
@@ -47,6 +40,13 @@ const building: Project[] = [
     description: "A privacy-first universal wishlist Chrome extension.",
     status: "Live",
     href: "https://zerolist.io",
+  },
+  {
+    name: "METS MISERY MADNESS",
+    description:
+      "An interactive 64-team bracket tournament through the most miserable moments in Mets history. Which calamity hurt more?",
+    status: "Live",
+    href: "/metsmiserymadness",
   },
 ];
 

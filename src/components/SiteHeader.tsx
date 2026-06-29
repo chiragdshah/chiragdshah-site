@@ -14,10 +14,6 @@ const NAV_ITEMS: readonly NavItem[] = [
   { id: "connect", label: "Let's Connect", cta: true },
 ] as const;
 
-const EXTERNAL_LINKS: readonly { href: string; label: string }[] = [
-  { href: "https://cshah.substack.com/", label: "Blog" },
-] as const;
-
 export function SiteHeader() {
   const { scrollY } = useScroll();
   const [visible, setVisible] = useState(false);
@@ -120,15 +116,6 @@ export function SiteHeader() {
                   </a>
                 );
               })}
-              {EXTERNAL_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="relative font-hero text-sm text-brown/60 transition hover:text-brown"
-                >
-                  {link.label}
-                </a>
-              ))}
             </nav>
           </div>
         </motion.header>
