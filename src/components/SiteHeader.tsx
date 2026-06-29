@@ -16,7 +16,6 @@ const NAV_ITEMS: readonly NavItem[] = [
 
 const EXTERNAL_LINKS: readonly { href: string; label: string }[] = [
   { href: "https://cshah.substack.com/", label: "Blog" },
-  { href: "/metsmiserymadness", label: "Mets Misery Madness" },
 ] as const;
 
 export function SiteHeader() {
