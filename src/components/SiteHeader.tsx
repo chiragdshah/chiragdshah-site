@@ -16,9 +16,6 @@ const NAV_ITEMS: readonly NavItem[] = [
 
 const EXTERNAL_LINKS: readonly { href: string; label: string }[] = [
   { href: "https://cshah.substack.com/", label: "Blog" },
-] as const;
-
-const GAME_LINKS: readonly { href: string; label: string }[] = [
   { href: "/metsmiserymadness", label: "Mets Misery Madness" },
 ] as const;
 
