@@ -87,6 +87,14 @@
   #hud{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:flex-start;
     justify-content:space-between;padding:12px 14px;pointer-events:none;gap:8px;}
   .hud-left,.hud-right{display:flex;gap:8px;flex-wrap:wrap;}
+  .hud-center{position:absolute;top:14px;left:50%;transform:translateX(-50%);
+    pointer-events:none;z-index:1;}
+  .gametitle{font-family:"Oswald";text-transform:uppercase;letter-spacing:.16em;
+    font-size:20px;font-weight:700;white-space:nowrap;line-height:1;
+    text-shadow:0 2px 12px rgba(0,0,0,.6);}
+  .gametitle span{font-size:20px;font-weight:700;}
+  .gametitle .gt-o{color:var(--orange);}
+  .gametitle .gt-w{color:#fff;}
   .pill{background:#0a1428;border:1px solid var(--line);
     border-radius:10px;padding:7px 12px;pointer-events:auto;white-space:nowrap;}
   #loc{font-family:"Oswald";text-transform:uppercase;letter-spacing:.12em;font-size:12px;}
@@ -223,7 +231,7 @@
   .regrid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin-top:10px;font-size:11.5px;text-align:left;}
   .regrid .r{color:var(--dim);} .regrid .v{color:#fff;}
   .regrid .v.ok{color:#5ee08a;}
-  .share{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+  .share{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px;margin-bottom:14px;}
   .sbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
     background:rgba(0,45,114,.4);color:#c7d4ea;font-size:15px;cursor:pointer;
     display:flex;align-items:center;justify-content:center;transition:transform .15s,border-color .15s,background .15s;}
@@ -248,8 +256,11 @@
   <!-- HUD -->
   <div id="hud">
     <div class="hud-left">
-      <div class="pill"><span id="loc">Mets Misery Madness</span></div>
+      <div class="pill" id="locPill" hidden><span id="loc"></span></div>
       <div class="pill score"><span class="slbl">Misery&nbsp;Pts</span> <b id="scoreVal">0</b></div>
+    </div>
+    <div class="hud-center">
+      <div class="gametitle"><span class="gt-o">Mets</span> <span class="gt-w">Misery</span> <span class="gt-o">Madness</span></div>
     </div>
     <div class="hud-right">
       <div class="pill iconbtn" id="restartBtn" title="Restart">↻ Restart</div>
@@ -290,6 +301,8 @@
       <div><span class="n">2</span><span>Match the consensus to bank <b>misery points</b>. Go contrarian for hot takes.</span></div>
       <div><span class="n">3</span><span>Every pick reveals the <b>real story</b>. 63 verdicts to a champion.</span></div>
     </div>
+    <button class="btn" id="startBtn">Begin the suffering</button>
+
     <div class="share" id="introShare">
       <button class="sbtn" data-net="x" aria-label="Share to X">𝕏</button>
       <button class="sbtn" data-net="fb" aria-label="Share to Facebook">f</button>
@@ -297,8 +310,6 @@
       <button class="sbtn" data-net="mail" aria-label="Share by email">✉</button>
       <button class="sbtn" data-net="copy" aria-label="Copy link">⧉</button>
     </div>
-
-    <button class="btn" id="startBtn">Begin the suffering</button>
   </div>
 
   <!-- champion / results -->
@@ -321,6 +332,8 @@
       <div class="regrid" id="rRegions"></div>
     </div>
 
+    <button class="btn" id="againBtn">Suffer again</button>
+
     <div class="share" id="rShare">
       <button class="sbtn" data-net="x" aria-label="Share to X">𝕏</button>
       <button class="sbtn" data-net="fb" aria-label="Share to Facebook">f</button>
@@ -328,8 +341,6 @@
       <button class="sbtn" data-net="mail" aria-label="Share by email">✉</button>
       <button class="sbtn" data-net="copy" aria-label="Copy results">⧉</button>
     </div>
-
-    <button class="btn" id="againBtn">Suffer again</button>
   </div>
 </div>
 
@@ -596,7 +607,7 @@ function fitBoard(animate=true){
 function startGame(){
   buildBoard(); buildQueue(); qi=0; active=null; locked=false;
   score=0; consensusMatches=0; totalPicks=0; hotTakes=0; upsetCount=0; bestUpset={gap:0}; catScore={H:0,F:0,C:0,D:0}; snap=null;
-  updateScore(); setProg();
+  updateScore(); setProg(); $("locPill").hidden=true;
   $("result").classList.add("hidden");
   $("reveal").classList.remove("show");
   fitBoard(false);
@@ -611,6 +622,7 @@ function setLoc(desc){
   let region = desc.scope==="region" ? REGIONS[desc.r].name : "Finals";
   let round = desc.scope==="region" ? ROUND_NAMES[desc.rd] : (desc.rd===0?"Final Four":"Championship");
   $("loc").innerHTML = region+' · <span class="rd">'+round+'</span>';
+  $("locPill").hidden=false;
 }
 function nextMatch(){
   if(qi>=queue.length) return finish();
@@ -822,7 +834,7 @@ function showResultCard(){
 
 /* ============ events ============ */
 $("startBtn").onclick=()=>{ $("intro").classList.add("hidden"); startGame(); };
-$("againBtn").onclick=()=>{ $("result").classList.add("hidden"); startGame(); };
+$("againBtn").onclick=()=>{ $("result").classList.add("hidden"); $("intro").classList.remove("hidden"); };
 
 /* ============ share ============ */
 function shareText(){
