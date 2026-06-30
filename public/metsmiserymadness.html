@@ -238,6 +238,22 @@
   .sbtn:hover{transform:translateY(-2px);border-color:var(--orange);background:rgba(255,89,16,.18);color:#fff;}
   .sbtn:active{transform:translateY(0);}
   .sbtn.copied{background:#5ee08a;border-color:#5ee08a;color:#0d2848;}
+
+  /* ---------- responsive (mobile) ---------- */
+  @media (max-width:560px){
+    #hud{flex-wrap:wrap;justify-content:space-between;gap:6px;padding:8px 10px;}
+    .hud-center{position:static;transform:none;order:-1;flex:1 1 100%;text-align:center;}
+    .hud-left,.hud-right{flex-wrap:wrap;}
+    .gametitle,.gametitle span{font-size:16px;letter-spacing:.12em;}
+    .pill{padding:6px 10px;}
+    #loc{font-size:11px;}
+    .pill.score .slbl{font-size:8px;}
+    .pill.score b{font-size:13px;}
+    .iconbtn{padding:7px 10px;font-size:11px;}
+    #topbar{height:110px;}
+    #progwrap{top:80px;left:10px;right:10px;}
+    #count{top:88px;right:10px;font-size:10px;}
+  }
 </style>
 </head>
 <body>
