@@ -20,20 +20,20 @@
 
   /* ---------- stage / camera ---------- */
   #viewport{position:absolute;inset:0;overflow:hidden;touch-action:none;}
-  #board{position:relative;transform-origin:0 0;width:fit-content;will-change:transform;
+  #board{position:relative;transform-origin:0 0;width:fit-content;
     -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-    text-rendering:optimizeLegibility;backface-visibility:hidden;}
+    text-rendering:geometricPrecision;}
   .vignette{position:absolute;inset:0;pointer-events:none;z-index:5;
     background:radial-gradient(120% 90% at 50% 45%,transparent 40%,rgba(4,9,20,.72) 100%);}
 
   /* ---------- bracket board ---------- */
-  #regions{display:grid;grid-template-columns:520px 520px;gap:26px;padding:30px;}
-  .region{background:linear-gradient(180deg,#0e1c38,#0b1730);border:1px solid var(--line);
-    border-radius:14px;padding:10px 8px 12px;}
+  #regions{display:grid;grid-template-columns:700px 700px;gap:30px;padding:30px;}
+  .region{display:flex;flex-direction:column;background:linear-gradient(180deg,#0e1c38,#0b1730);
+    border:1px solid var(--line);border-radius:14px;padding:10px 8px 12px;}
   .rname{font-family:"Oswald";font-weight:700;text-transform:uppercase;letter-spacing:.2em;
     font-size:15px;color:#cfe0ff;text-align:center;padding:4px 0 8px;}
   .rname b{color:var(--orange);}
-  .cols{display:flex;gap:6px;align-items:stretch;}
+  .cols{display:flex;gap:6px;align-items:stretch;flex:1;}
   .col{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:6px;}
   .col.champcol{flex:.7;justify-content:center;}
   .match{display:flex;flex-direction:column;gap:4px;border-radius:8px;padding:3px;
@@ -63,29 +63,33 @@
 
   /* finals */
   #finals{margin:4px 30px 36px;background:linear-gradient(180deg,#0e1c38,#0a1326);
-    border:1px solid var(--line);border-radius:16px;padding:14px 16px 18px;}
+    border:1px solid var(--line);border-radius:16px;padding:14px 16px 18px;
+    width:700px;box-sizing:border-box;}
   #finals .ftitle{font-family:"Oswald";text-transform:uppercase;letter-spacing:.22em;
     font-size:13px;color:var(--orange);text-align:center;margin-bottom:12px;}
-  .fcols{display:flex;align-items:center;justify-content:center;gap:14px;}
-  .fcol{display:flex;flex-direction:column;gap:14px;}
-  .fcol.champcol{justify-content:center;}
-  .fcell{width:150px;min-height:34px;}
-  .trophyslot{width:170px;min-height:46px;font-size:13px;
+  .fcols{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;}
+  .fcol{display:flex;flex-direction:column;gap:8px;justify-content:center;align-items:center;width:100%;}
+  .fcell{width:100%;max-width:300px;min-height:34px;}
+  .trophyslot{width:100%;max-width:300px;min-height:46px;font-size:13px;
     background:rgba(255,89,16,.1);border:1px dashed rgba(255,89,16,.4);}
   .trophyslot.filled{background:rgba(255,89,16,.2);border:1px solid var(--orange);}
 
   /* ---------- HUD ---------- */
+  #topbar{position:absolute;top:0;left:0;right:0;height:124px;z-index:19;
+    background:#0a1428;pointer-events:none;}
   #hud{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:flex-start;
     justify-content:space-between;padding:12px 14px;pointer-events:none;gap:8px;}
   .hud-left,.hud-right{display:flex;gap:8px;flex-wrap:wrap;}
-  .pill{background:rgba(10,20,40,.82);backdrop-filter:blur(8px);border:1px solid var(--line);
+  .pill{background:#0a1428;border:1px solid var(--line);
     border-radius:10px;padding:7px 12px;pointer-events:auto;white-space:nowrap;}
   #loc{font-family:"Oswald";text-transform:uppercase;letter-spacing:.12em;font-size:12px;}
   #loc .rd{color:var(--orange);}
   .pill.score{display:flex;align-items:center;gap:7px;}
   .pill.score .slbl{font-family:"Oswald";font-size:9px;letter-spacing:.14em;color:var(--dim);}
   .pill.score b{font-family:"Oswald";font-size:14px;color:var(--orange);}
-  .iconbtn{width:36px;height:36px;display:grid;place-items:center;font-size:15px;cursor:pointer;padding:0;}
+  .iconbtn{display:flex;align-items:center;gap:5px;font-family:"Oswald";font-size:12px;
+    letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:9px 12px;}
+  #restartBtn{white-space:nowrap;}
   #progwrap{position:absolute;top:92px;left:14px;right:14px;z-index:20;height:4px;
     background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;pointer-events:none;}
   #prog{height:100%;width:0;background:var(--orange);transition:width .5s;}
@@ -102,15 +106,6 @@
     20%{opacity:1;transform:translate(-50%,-6px) scale(1.05);}
     100%{opacity:0;transform:translate(-50%,-44px) scale(1);}}
 
-  /* ---------- prompt ---------- */
-  #prompt{position:absolute;bottom:0;left:0;right:0;z-index:20;text-align:center;
-    padding:0 0 22px;pointer-events:none;opacity:0;transform:translateY(14px);
-    transition:opacity .4s,transform .4s;}
-  #prompt.show{opacity:1;transform:none;}
-  #prompt .q{font-family:"Oswald";text-transform:uppercase;letter-spacing:.16em;font-size:15px;}
-  #prompt .q b{color:var(--orange);}
-  #prompt .sub{font-size:11px;color:var(--dim);margin-top:3px;}
-
   /* ---------- chips ---------- */
   .chip{display:inline-flex;align-items:center;gap:5px;font-family:"Oswald";font-size:11px;
     letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:20px;border:1px solid;}
@@ -119,16 +114,31 @@
   .chip.C{background:rgba(40,200,160,.14);border-color:var(--C);color:#9af0d8;}
   .chip.D{background:rgba(180,120,255,.16);border-color:var(--D);color:#dcc8ff;}
 
-  /* ---------- reveal ---------- */
+  /* ---------- reveal (also acts as the persistent prompt) ---------- */
   .reveal{position:absolute;inset:0;z-index:30;display:flex;align-items:flex-end;
-    justify-content:center;padding:0 16px 30px;background:rgba(4,9,20,.55);
-    opacity:0;pointer-events:none;transition:opacity .3s;}
+    justify-content:center;padding:0 16px 30px;background:rgba(2,6,14,0);
+    opacity:0;pointer-events:none;transition:opacity .4s,background .3s;}
   .reveal.show{opacity:1;pointer-events:auto;}
-  .revcard{width:100%;max-width:440px;background:linear-gradient(180deg,#10203f,#0b1832);
-    border:1px solid var(--line);border-radius:16px;padding:18px 18px 14px;text-align:center;
+  .reveal.prompt.show{background:linear-gradient(180deg,rgba(2,6,14,0) 30%,rgba(2,6,14,.72) 100%);}
+  .reveal.result{background:rgba(2,6,14,.78);}
+  .revcard{width:100%;max-width:440px;background:linear-gradient(180deg,#16305c,#0d1c3a);
+    border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:14px 18px 14px;text-align:center;
     transform:translateY(20px);transition:transform .35s cubic-bezier(.2,.9,.3,1);
-    box-shadow:0 24px 60px rgba(0,0,0,.5);}
+    box-shadow:0 30px 80px rgba(0,0,0,.65),0 0 0 1px rgba(0,45,114,.4),inset 0 1px 0 rgba(255,255,255,.08);}
   .reveal.show .revcard{transform:none;}
+  /* prompt mode (before a choice) */
+  .reveal.prompt .revcard{padding:16px 22px;box-shadow:0 16px 40px rgba(0,0,0,.55),0 0 0 1px rgba(0,45,114,.4),inset 0 1px 0 rgba(255,255,255,.08);}
+  .reveal.prompt{pointer-events:none;}
+  .reveal.prompt.show{pointer-events:none;}
+  .pquest{font-family:"Oswald";text-transform:uppercase;letter-spacing:.16em;font-size:15px;
+    margin:0 0 3px;}
+  .pquest b{color:var(--orange);}
+  .psub{font-size:11px;color:var(--dim);margin:0;}
+  .reveal.prompt .revnext,.reveal.prompt .revstory,.reveal.prompt .revpts,
+  .reveal.prompt .revmeta,.reveal.prompt .revname,.reveal.prompt .revhead,
+  .reveal.prompt .revbtns{display:none;}
+  .reveal.prompt .promptBlock{display:block;}
+  .reveal:not(.prompt) .promptBlock{display:none;}
   .revhead{font-family:"Oswald";letter-spacing:.14em;text-transform:uppercase;font-size:13px;margin-bottom:6px;}
   .revhead.yes{color:#5ee08a;} .revhead.no{color:var(--orange);}
   .revname{font-family:"Oswald";font-weight:700;text-transform:uppercase;line-height:1;
@@ -141,30 +151,40 @@
   .revpts .muted{color:var(--dim);}
   .upsetTag{font-family:"Oswald";letter-spacing:.1em;color:#15110d;background:var(--orange);
     padding:1px 7px;border-radius:5px;font-size:10px;}
-  .revnext{margin-top:14px;font-family:"Oswald";font-weight:600;text-transform:uppercase;
-    letter-spacing:.14em;font-size:13px;color:#15110d;background:var(--orange);border:none;
-    border-radius:10px;padding:11px 22px;cursor:pointer;width:100%;}
-  .revhint{margin-top:10px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
+  .revnext{font-family:"Oswald";font-weight:600;text-transform:uppercase;
+    letter-spacing:.14em;font-size:13px;color:#15110d;background:var(--orange);border:1px solid var(--orange);
+    border-radius:10px;padding:11px 22px;cursor:pointer;flex:1;box-sizing:border-box;}
+  .revbtns{display:flex;gap:10px;margin-top:14px;}
+  .revback{font-family:"Oswald";font-weight:600;text-transform:uppercase;
+    letter-spacing:.14em;font-size:13px;color:#c7d4ea;background:transparent;border:1px solid var(--line);
+    border-radius:10px;padding:11px 18px;cursor:pointer;flex:1;box-sizing:border-box;}
+  .revback:hover{background:rgba(255,255,255,.05);}
 
   /* ---------- overlays ---------- */
   .overlay{position:absolute;inset:0;z-index:40;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;text-align:center;padding:26px;overflow-y:auto;
+    align-items:center;justify-content:safe center;text-align:center;padding:26px;overflow-y:auto;
     background:radial-gradient(120% 90% at 50% 20%,#15264a,var(--navy));}
   .overlay.hidden{display:none;}
-  .eyebrow{font-family:"Oswald";letter-spacing:.3em;text-transform:uppercase;font-size:12px;
-    color:var(--orange);margin:0 0 10px;}
-  h1{font-family:"Oswald";font-weight:700;text-transform:uppercase;line-height:.9;
-    font-size:clamp(40px,12vw,84px);margin:0;}
+  .eyebrow{font-family:"Oswald";letter-spacing:.3em;text-transform:uppercase;font-size:13px;
+    color:#fff;margin:0 0 10px;max-width:380px;white-space:nowrap;overflow:hidden;flex:none;}
+  h1{font-family:"Oswald";font-weight:700;text-transform:uppercase;line-height:.7;
+    margin:0;display:flex;flex-direction:column;gap:0;max-width:380px;width:380px;}
   h1 .o{color:var(--orange);}
-  .blurb{color:var(--dim);max-width:440px;font-size:14px;margin:18px 0 6px;}
-  .rules{display:flex;flex-direction:column;gap:7px;max-width:380px;margin:14px 0 4px;
-    text-align:left;font-size:13px;color:#c7d4ea;}
+  h1 .w2{margin-bottom:-0.05em;}
+  h1 span{display:block;width:100%;text-align:center;letter-spacing:normal;
+    white-space:nowrap;overflow:visible;}
+  .blurb{color:#c7d4ea;font-weight:600;font-size:14px;margin:18px 0 6px;max-width:380px;line-height:1.5;text-align:left;}
+  .rules{display:flex;flex-direction:column;gap:7px;margin:14px 0 4px;
+    text-align:left;font-size:13px;color:var(--dim);
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+    border-radius:12px;padding:14px 16px;max-width:380px;}
   .rules div{display:flex;gap:9px;}
   .rules .n{color:var(--orange);font-family:"Oswald";}
-  .btn{margin-top:24px;font-family:"Oswald";font-weight:700;text-transform:uppercase;
+  .btn{margin-top:18px;font-family:"Oswald";font-weight:700;text-transform:uppercase;
     letter-spacing:.16em;font-size:16px;color:#15110d;background:var(--orange);
     border:none;border-radius:12px;padding:16px 34px;cursor:pointer;
-    box-shadow:0 12px 34px rgba(255,89,16,.32);transition:transform .15s,box-shadow .15s;}
+    box-shadow:0 12px 34px rgba(255,89,16,.32);transition:transform .15s,box-shadow .15s;
+    width:380px;max-width:100%;}
   .btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(255,89,16,.42);}
   .btn:active{transform:translateY(0);}
 
@@ -208,6 +228,9 @@
     <div class="vignette"></div>
   </div>
 
+  <!-- topbar (opaque backdrop for HUD + progress + count) -->
+  <div id="topbar"></div>
+
   <!-- HUD -->
   <div id="hud">
     <div class="hud-left">
@@ -215,37 +238,38 @@
       <div class="pill score"><span class="slbl">Misery&nbsp;Pts</span> <b id="scoreVal">0</b></div>
     </div>
     <div class="hud-right">
-      <div class="pill iconbtn" id="muteBtn" title="Sound">🔊</div>
-      <div class="pill iconbtn" id="restartBtn" title="Restart">↻</div>
+      <div class="pill iconbtn" id="restartBtn" title="Restart">↻ Restart</div>
     </div>
   </div>
   <div id="progwrap"><div id="prog"></div></div>
   <div id="count"></div>
   <div id="pop"></div>
 
-  <!-- prompt -->
-  <div id="prompt">
-    <div class="q" id="promptQ">Which was <b>worse</b>?</div>
-    <div class="sub">Tap the more miserable moment</div>
-  </div>
-
-  <!-- reveal card -->
+  <!-- reveal / prompt card (one persistent box that swaps content) -->
   <div class="reveal" id="reveal">
     <div class="revcard">
+      <!-- prompt state (before a choice) -->
+      <div class="promptBlock">
+        <p class="pquest" id="promptQ">Which was <b>worse</b>?</p>
+        <p class="psub">Tap the more miserable moment</p>
+      </div>
+      <!-- result state (after a choice) -->
       <div class="revhead" id="revHead"></div>
       <div class="revname" id="revName"></div>
       <div class="revmeta"><span class="chip" id="revChip"></span><span class="rseed" id="revSeed"></span></div>
       <div class="revstory" id="revStory"></div>
       <div class="revpts" id="revPts"></div>
-      <button class="revnext" id="revNext">Next ›</button>
-      <div class="revhint">tap anywhere to continue</div>
+      <div class="revbtns">
+        <button class="revback" id="revBack">‹ Reconsider</button>
+        <button class="revnext" id="revNext">Next ›</button>
+      </div>
     </div>
   </div>
 
   <!-- intro -->
   <div class="overlay" id="intro">
     <p class="eyebrow">A 64-calamity tribunal of suffering</p>
-    <h1>Misery<br><span class="o">Madness</span></h1>
+    <h1><span class="o w1">Mets</span><br><span class="w2">Misery</span><br><span class="o w3">Madness</span></h1>
     <p class="blurb">The whole field of Mets misery is laid out below. The camera flies you matchup to matchup — you decide which one hurt more, and learn what your taste in suffering says about you.</p>
     <div class="rules">
       <div><span class="n">1</span><span>Tap whichever moment is <b>more miserable</b>. It advances.</span></div>
@@ -435,26 +459,27 @@ function buildBoard(){
   /* finals */
   finalsEl.innerHTML='<div class="ftitle">Final Four · Championship</div>';
   const fcols=document.createElement("div"); fcols.className="fcols";
-  const c1=document.createElement("div"); c1.className="fcol";
   for(let i=0;i<4;i++){ state.finals.r0[i].el=makeCell(state.finals.r0[i],"empty fcell"); }
+  for(let i=0;i<2;i++){ state.finals.r1[i].el=makeCell(state.finals.r1[i],"empty fcell"); }
+
+  // Semifinal 1
   const mA=document.createElement("div"); mA.className="match"; mA.dataset.ref="F-0-0";
   mA.appendChild(state.finals.r0[0].el); mA.appendChild(state.finals.r0[1].el);
+  // Semifinal 2
   const mB=document.createElement("div"); mB.className="match"; mB.dataset.ref="F-0-1";
   mB.appendChild(state.finals.r0[2].el); mB.appendChild(state.finals.r0[3].el);
-  c1.appendChild(mA); c1.appendChild(mB);
-
-  const c2=document.createElement("div"); c2.className="fcol";
-  for(let i=0;i<2;i++){ state.finals.r1[i].el=makeCell(state.finals.r1[i],"empty fcell"); }
+  // Championship
   const mC=document.createElement("div"); mC.className="match"; mC.dataset.ref="F-1-0";
   mC.appendChild(state.finals.r1[0].el); mC.appendChild(state.finals.r1[1].el);
-  c2.appendChild(mC);
-
-  const c3=document.createElement("div"); c3.className="fcol champcol";
+  // Trophy
   const trophy=document.createElement("div"); trophy.className="cell trophyslot empty";
   trophy.innerHTML='<span class="sd"></span><span class="nm">Champion</span>';
-  state.finals.champEl=trophy; c3.appendChild(trophy);
+  state.finals.champEl=trophy;
 
-  fcols.appendChild(c1); fcols.appendChild(c2); fcols.appendChild(c3);
+  const wrapA=document.createElement("div"); wrapA.className="fcol"; wrapA.appendChild(mA);
+  const wrapB=document.createElement("div"); wrapB.className="fcol"; wrapB.appendChild(mB);
+  const wrapC=document.createElement("div"); wrapC.className="fcol"; wrapC.appendChild(mC); wrapC.appendChild(trophy);
+  fcols.appendChild(wrapA); fcols.appendChild(wrapB); fcols.appendChild(wrapC);
   finalsEl.appendChild(fcols);
 }
 
@@ -511,9 +536,10 @@ function boardCenter(el){
   return {cx:x+el.offsetWidth/2, cy:y+el.offsetHeight/2, w:el.offsetWidth, h:el.offsetHeight};
 }
 let cam={z:1,cx:0,cy:0,fit:true};
-function applyCam(z,cx,cy,animate){
+function applyCam(z,cx,cy,animate,screenCY){
   const vw=viewport.clientWidth, vh=viewport.clientHeight;
-  const tx=vw/2 - cx*z, ty=vh/2 - cy*z;
+  const sy = screenCY!=null ? screenCY : vh/2;
+  const tx=vw/2 - cx*z, ty=sy - cy*z;
   board.style.transition = animate ? "transform 1.15s cubic-bezier(.62,.03,.2,1)" : "none";
   board.style.transform="translate("+tx+"px,"+ty+"px) scale("+z+")";
   cam={z,cx,cy,fit:false};
@@ -529,13 +555,17 @@ function fitBoard(animate=true){
   const bw=board.scrollWidth, bh=board.scrollHeight;
   const vw=viewport.clientWidth, vh=viewport.clientHeight;
   const z=Math.min(vw/bw,vh/bh)*0.9;
-  applyCam(z,bw/2,bh/2,animate); cam.fit=true;
+  // Center the board in the area below the topbar so the top of the
+  // bracket stays visible (the topbar is ~124px tall).
+  const topbarH=124, availH=vh-topbarH;
+  const screenCY=topbarH+availH/2;
+  applyCam(z,bw/2,bh/2,animate,screenCY); cam.fit=true;
 }
 
 /* ============ GAME LOOP ============ */
 function startGame(){
   buildBoard(); buildQueue(); qi=0; active=null; locked=false;
-  score=0; consensusMatches=0; totalPicks=0; hotTakes=0; upsetCount=0; bestUpset={gap:0}; catScore={H:0,F:0,C:0,D:0};
+  score=0; consensusMatches=0; totalPicks=0; hotTakes=0; upsetCount=0; bestUpset={gap:0}; catScore={H:0,F:0,C:0,D:0}; snap=null;
   updateScore(); setProg();
   $("result").classList.add("hidden");
   $("reveal").classList.remove("show");
@@ -572,7 +602,6 @@ function armChoices(){
     slot.el.classList.add("live");
     slot.el.onclick=()=>choose(k);
   });
-  $("promptQ").innerHTML=PROMPTS[qi%PROMPTS.length];
   showPrompt();
   locked=false;
 }
@@ -581,6 +610,7 @@ function choose(k){
   const {slots,desc}=active;
   const win = k==="a"?slots.a:slots.b;
   const lose= k==="a"?slots.b:slots.a;
+  saveSnapshot(desc, slots, win);
   slots.a.el.classList.remove("live"); slots.b.el.classList.remove("live");
   slots.a.el.onclick=null; slots.b.el.onclick=null;
   win.el.classList.add("chosen"); lose.el.classList.add("eliminated");
@@ -596,10 +626,68 @@ function choose(k){
   if(upset){ upsetCount++; const gap=win.seed-lose.seed; if(gap>bestUpset.gap) bestUpset={name:win.name,over:lose.name,gap}; }
   catScore[win.cat]=(catScore[win.cat]||0)+w;
   updateScore(); floatPop(pts, matched, upset);
-  beep(desc.scope==="finals"&&desc.rd===1);
   writeWinner(desc, win);
   qi++; setProg();
   setTimeout(()=>showReveal(win, matched, pts, upset), 640);
+}
+
+/* snapshot for reconsider */
+let snap=null;
+function destCells(desc){
+  const cells=[];
+  const wrap=el=>({el, seed:null, name:null, mis:0, cat:null, story:null});
+  if(desc.scope==="region"){
+    if(desc.rd<3) cells.push(state.regions[desc.r].rounds[desc.rd+1][desc.m]);
+    else { cells.push(wrap(state.regions[desc.r].champCell)); cells.push(state.finals.r0[desc.r]); }
+  } else {
+    if(desc.rd===0) cells.push(state.finals.r1[desc.m]);
+    else { cells.push(wrap(state.finals.champEl)); }
+  }
+  return cells;
+}
+function saveSnapshot(desc, slots, win){
+  const cells=destCells(desc).map(s=>({slot:s, snap:{seed:s.seed,name:s.name,mis:s.mis,cat:s.cat,story:s.story,empty:s.el.classList.contains("empty"),filled:s.el.classList.contains("filled"),sd:s.el.querySelector(".sd").textContent,nm:s.el.querySelector(".nm").textContent}}));
+  snap={qi, score, totalPicks, consensusMatches, hotTakes, upsetCount, bestUpset:{...bestUpset}, catScore:{...catScore},
+    a:{el:slots.a.el}, b:{el:slots.b.el}, cells, champ: state.finals.champ?{...state.finals.champ}:null};
+}
+function reconsider(){
+  if(!snap||!revealOpen) return;
+  revealOpen=false; clearTimeout(revealTimer);
+  $("reveal").classList.remove("show");
+  // restore counters
+  qi=snap.qi; score=snap.score; totalPicks=snap.totalPicks; consensusMatches=snap.consensusMatches;
+  hotTakes=snap.hotTakes; upsetCount=snap.upsetCount; bestUpset={...snap.bestUpset}; catScore={...snap.catScore};
+  updateScore(); setProg();
+  // restore chosen/eliminated cells
+  snap.a.el.classList.remove("chosen","eliminated");
+  snap.b.el.classList.remove("chosen","eliminated");
+  // restore dest cells
+  snap.cells.forEach(c=>{
+    const s=c.slot; Object.assign(s,c.snap);
+    if(c.snap.empty) s.el.classList.add("empty"); else s.el.classList.remove("empty");
+    if(c.snap.filled) s.el.classList.add("filled"); else s.el.classList.remove("filled");
+    s.el.querySelector(".sd").textContent=c.snap.sd;
+    s.el.querySelector(".nm").textContent=c.snap.nm;
+    paintCell(s.el, s);
+  });
+  state.finals.champ = snap.champ ? {...snap.champ} : null;
+  if(!snap.champ && state.finals.champEl){
+    state.finals.champEl.classList.add("empty"); state.finals.champEl.classList.remove("filled");
+    state.finals.champEl.querySelector(".sd").textContent="";
+    state.finals.champEl.querySelector(".nm").textContent="—";
+  }
+  snap=null;
+  // re-arm the same match
+  const desc=queue[qi];
+  const slots=getSlots(desc);
+  const el=matchEl(desc);
+  active={desc, slots, el};
+  setLoc(desc);
+  document.querySelectorAll(".match.active").forEach(m=>m.classList.remove("active"));
+  el.classList.add("active");
+  hidePrompt();
+  focusMatch(el);
+  setTimeout(armChoices, 1180);
 }
 function finish(){
   active=null; hidePrompt();
@@ -628,9 +716,11 @@ function showReveal(win, matched, pts, upset){
   $("revName").textContent=win.name;
   const chip=$("revChip"); chip.textContent=CATS[win.cat].emoji+" "+CATS[win.cat].label; chip.className="chip "+win.cat;
   $("revSeed").textContent="#"+win.seed+" seed";
-  $("revStory").textContent=win.story||"";
+  const showStory = active.desc.scope==="region" && active.desc.rd===0;
+  $("revStory").textContent = showStory ? (win.story||"") : "";
+  $("revStory").style.display = showStory ? "" : "none";
   $("revPts").innerHTML = (matched?"<b>+"+pts+"</b> misery points":'<span class="muted">no points — you went against the grain</span>') + (upset?' · <span class="upsetTag">UPSET</span>':"");
-  $("reveal").classList.add("show");
+  showResultCard();
 }
 function continueReveal(){
   if(!revealOpen) return; revealOpen=false; clearTimeout(revealTimer);
@@ -685,34 +775,27 @@ function showResult(){
   $("result").classList.remove("hidden");
 }
 
-/* ============ prompt helpers ============ */
-function showPrompt(){ $("prompt").classList.add("show"); }
-function hidePrompt(){ $("prompt").classList.remove("show"); }
-
-/* ============ audio ============ */
-let actx=null, muted=false;
-function audioInit(){ try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
-function beep(big){
-  if(muted||!actx) return;
-  try{
-    const o=actx.createOscillator(), g=actx.createGain();
-    o.type="sine"; o.frequency.value=big?90:150;
-    g.gain.value=0.0001; o.connect(g); g.connect(actx.destination);
-    const t=actx.currentTime;
-    g.gain.exponentialRampToValueAtTime(big?0.22:0.13, t+0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001, t+(big?0.7:0.28));
-    o.frequency.exponentialRampToValueAtTime(big?55:90, t+(big?0.7:0.28));
-    o.start(t); o.stop(t+(big?0.72:0.3));
-  }catch(e){}
+/* ============ prompt / reveal helpers ============ */
+const revealEl=$("reveal");
+function showPrompt(){
+  $("promptQ").innerHTML=PROMPTS[qi%PROMPTS.length];
+  revealEl.classList.remove("result");
+  revealEl.classList.add("prompt");
+  revealEl.classList.add("show");
+}
+function hidePrompt(){ revealEl.classList.remove("show"); }
+function showResultCard(){
+  revealEl.classList.remove("prompt");
+  revealEl.classList.add("result");
+  revealEl.classList.add("show");
 }
 
 /* ============ events ============ */
-$("startBtn").onclick=()=>{ audioInit(); $("intro").classList.add("hidden"); startGame(); };
+$("startBtn").onclick=()=>{ $("intro").classList.add("hidden"); startGame(); };
 $("againBtn").onclick=()=>{ $("result").classList.add("hidden"); startGame(); };
-$("restartBtn").onclick=()=>{ if(confirm("Restart from the beginning?")){ $("result").classList.add("hidden"); startGame(); } };
-$("muteBtn").onclick=()=>{ muted=!muted; $("muteBtn").textContent=muted?"🔇":"🔊"; };
-$("reveal").onclick=continueReveal;
+$("restartBtn").onclick=()=>{ if(confirm("Restart from the beginning?")){ $("result").classList.add("hidden"); $("reveal").classList.remove("show"); $("intro").classList.remove("hidden"); } };
 $("revNext").onclick=(e)=>{ e.stopPropagation(); continueReveal(); };
+$("revBack").onclick=(e)=>{ e.stopPropagation(); reconsider(); };
 let rTimer; window.addEventListener("resize",()=>{ clearTimeout(rTimer); rTimer=setTimeout(()=>{
   if(cam.fit) fitBoard(false);
   else if(active&&active.el) focusMatch(active.el,false);
@@ -720,6 +803,37 @@ let rTimer; window.addEventListener("resize",()=>{ clearTimeout(rTimer); rTimer=
 
 /* build once behind the intro */
 buildBoard(); fitBoard(false);
+
+/* auto-fit h1 words and eyebrow to container width */
+function fitTitleWords(){
+  const container = document.querySelector('h1');
+  if(!container) return;
+  const target = container.offsetWidth;
+  container.querySelectorAll('span').forEach(span=>{
+    let lo=10, hi=300, best=lo;
+    while(lo<=hi){
+      const mid=(lo+hi)/2;
+      span.style.fontSize = mid+'px';
+      if(span.scrollWidth <= target){ best=mid; lo=mid+1; }
+      else { hi=mid-1; }
+    }
+    span.style.fontSize = best+'px';
+  });
+  const eyebrow = document.querySelector('.eyebrow');
+  if(eyebrow){
+    let lo=8, hi=60, best=lo;
+    while(lo<=hi){
+      const mid=(lo+hi)/2;
+      eyebrow.style.fontSize = mid+'px';
+      if(eyebrow.scrollWidth <= target){ best=mid; lo=mid+1; }
+      else { hi=mid-1; }
+    }
+    eyebrow.style.fontSize = best+'px';
+  }
+}
+fitTitleWords();
+let titleTimer;
+window.addEventListener('resize',()=>{ clearTimeout(titleTimer); titleTimer=setTimeout(fitTitleWords,150); });
 </script>
 </body>
 </html>

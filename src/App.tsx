@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { BackgroundLayer } from "./components/BackgroundLayer";
 import { CornerWatermark } from "./components/CornerWatermark";
 import { SiteHeader } from "./components/SiteHeader";
@@ -8,44 +7,6 @@ import { CurrentProjects } from "./sections/CurrentProjects";
 import { Currently } from "./sections/Currently";
 import { SignalCheck } from "./sections/SignalCheck";
 import { LetsConnect } from "./sections/LetsConnect";
-import { MetsMiseryMadness } from "./sections/MetsMiseryMadness";
-
-function App() {
-  const [isGameRoute, setIsGameRoute] = useState(() => 
-    typeof window !== "undefined" && window.location.pathname === "/metsmiserymadness"
-  );
-
-  useEffect(() => {
-    const handleLocationChange = () => {
-      setIsGameRoute(window.location.pathname === "/metsmiserymadness");
-    };
-    
-    window.addEventListener("popstate", handleLocationChange);
-    const originalPushState = history.pushState;
-    const originalReplaceState = history.replaceState;
-    
-    history.pushState = function(...args) {
-      originalPushState.apply(this, args);
-      handleLocationChange();
-    };
-    
-    history.replaceState = function(...args) {
-      originalReplaceState.apply(this, args);
-      handleLocationChange();
-    };
-    
-    handleLocationChange();
-    
-    return () => {
-      window.removeEventListener("popstate", handleLocationChange);
-      history.pushState = originalPushState;
-      history.replaceState = originalReplaceState;
-    };
-  }, []);
-
-  if (isGameRoute) {
-    return <MetsMiseryMadness />;
-  }
 
   return (
     <>
