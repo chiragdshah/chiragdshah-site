@@ -8,6 +8,7 @@ import { Currently } from "./sections/Currently";
 import { SignalCheck } from "./sections/SignalCheck";
 import { LetsConnect } from "./sections/LetsConnect";
 
+function App() {
   return (
     <>
       <BackgroundLayer variant="bold" />
