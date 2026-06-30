@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Mets Misery Madness — The Gauntlet</title>
+<meta property="og:title" content="Mets Misery Madness — The Gauntlet">
+<meta property="og:description" content="Can you survive 64 Mets calamities? Crown your Most Miserable Moment in Mets Misery Madness.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chiragdshah.com/metsmiserymadness">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mets Misery Madness — The Gauntlet">
+<meta name="twitter:description" content="Can you survive 64 Mets calamities? Crown your Most Miserable Moment in Mets Misery Madness.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -216,6 +223,13 @@
   .regrid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin-top:10px;font-size:11.5px;text-align:left;}
   .regrid .r{color:var(--dim);} .regrid .v{color:#fff;}
   .regrid .v.ok{color:#5ee08a;}
+  .share{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+  .sbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
+    background:rgba(0,45,114,.4);color:#c7d4ea;font-size:15px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:transform .15s,border-color .15s,background .15s;}
+  .sbtn:hover{transform:translateY(-2px);border-color:var(--orange);background:rgba(255,89,16,.18);color:#fff;}
+  .sbtn:active{transform:translateY(0);}
+  .sbtn.copied{background:#5ee08a;border-color:#5ee08a;color:#0d2848;}
 </style>
 </head>
 <body>
@@ -276,6 +290,14 @@
       <div><span class="n">2</span><span>Match the consensus to bank <b>misery points</b>. Go contrarian for hot takes.</span></div>
       <div><span class="n">3</span><span>Every pick reveals the <b>real story</b>. 63 verdicts to a champion.</span></div>
     </div>
+    <div class="share" id="introShare">
+      <button class="sbtn" data-net="x" aria-label="Share to X">𝕏</button>
+      <button class="sbtn" data-net="fb" aria-label="Share to Facebook">f</button>
+      <button class="sbtn" data-net="rd" aria-label="Share to Reddit">r</button>
+      <button class="sbtn" data-net="mail" aria-label="Share by email">✉</button>
+      <button class="sbtn" data-net="copy" aria-label="Copy link">⧉</button>
+    </div>
+
     <button class="btn" id="startBtn">Begin the suffering</button>
   </div>
 
@@ -297,6 +319,14 @@
       <div class="agree" id="rAgree"></div>
       <div style="margin-top:6px;color:#c7d4ea" id="rAgreeText"></div>
       <div class="regrid" id="rRegions"></div>
+    </div>
+
+    <div class="share" id="rShare">
+      <button class="sbtn" data-net="x" aria-label="Share to X">𝕏</button>
+      <button class="sbtn" data-net="fb" aria-label="Share to Facebook">f</button>
+      <button class="sbtn" data-net="rd" aria-label="Share to Reddit">r</button>
+      <button class="sbtn" data-net="mail" aria-label="Share by email">✉</button>
+      <button class="sbtn" data-net="copy" aria-label="Copy results">⧉</button>
     </div>
 
     <button class="btn" id="againBtn">Suffer again</button>
@@ -793,6 +823,46 @@ function showResultCard(){
 /* ============ events ============ */
 $("startBtn").onclick=()=>{ $("intro").classList.add("hidden"); startGame(); };
 $("againBtn").onclick=()=>{ $("result").classList.add("hidden"); startGame(); };
+
+/* ============ share ============ */
+function shareText(){
+  const c=state.finals&&state.finals.champ;
+  if(c){
+    const g=$("rGrade").textContent, gn=$("rRate").textContent;
+    return "My Most Miserable Mets Moment: "+c.name+" ("+g+" \u00b7 "+gn+") \u2014 "+score+" Misery Pts. "+
+      "Play Mets Misery Madness: "+location.href;
+  }
+  return "Can you survive 64 Mets calamities? Crown your Most Miserable Moment in Mets Misery Madness: "+location.href;
+}
+function openShare(net){
+  const t=encodeURIComponent(shareText());
+  const u=encodeURIComponent(location.href);
+  let url;
+  switch(net){
+    case "x":    url="https://twitter.com/intent/tweet?text="+t; break;
+    case "fb":   url="https://www.facebook.com/sharer/sharer.php?u="+u+"&quote="+t; break;
+    case "rd":   url="https://www.reddit.com/submit?title="+t+"&url="+u; break;
+    case "mail": {
+      const a=document.createElement("a");
+      a.href="mailto:?subject="+encodeURIComponent("My Mets Misery Madness Results")+"&body="+t;
+      a.style.display="none"; document.body.appendChild(a); a.click(); a.remove();
+      return;
+    }
+    case "copy":
+      navigator.clipboard.writeText(shareText()).then(()=>{
+        const b=document.querySelector('.sbtn[data-net="copy"]');
+        b.classList.add("copied"); setTimeout(()=>b.classList.remove("copied"),1500);
+      });
+      return;
+  }
+  window.open(url,"_blank","noopener,noreferrer,width=600,height=600");
+}
+$("rShare").addEventListener("click",e=>{
+  const b=e.target.closest(".sbtn"); if(b) openShare(b.dataset.net);
+});
+$("introShare").addEventListener("click",e=>{
+  const b=e.target.closest(".sbtn"); if(b) openShare(b.dataset.net);
+});
 $("restartBtn").onclick=()=>{ if(confirm("Restart from the beginning?")){ $("result").classList.add("hidden"); $("reveal").classList.remove("show"); $("intro").classList.remove("hidden"); } };
 $("revNext").onclick=(e)=>{ e.stopPropagation(); continueReveal(); };
 $("revBack").onclick=(e)=>{ e.stopPropagation(); reconsider(); };
