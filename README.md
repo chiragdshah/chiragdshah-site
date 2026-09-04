@@ -79,28 +79,27 @@ Site deploys automatically via Netlify on push to `main` (Netlify project `chira
 ## Build cost & the docs-only guard
 
 Netlify meters **production deploys at 15 credits each**, flat -- a README commit costs the
-same as a real release. Traffic is negligible by comparison: bandwidth, web requests and
-compute together run under 5% of the monthly allowance across all of Chirag's sites.
+same as a real release. Traffic is negligible by comparison.
 
-`netlify.toml` carries an `ignore` command that skips the build when a commit touches only
-root-level docs (`*.md`) or `.claude/`.
+`netlify.toml` sets `ignore = "bash scripts/netlify-ignore.sh"`. That script skips the build
+when a commit touches only root-level `*.md` files or `.claude/`, and builds otherwise.
 
-Three things to preserve if you edit it:
+**Do not inline a git exclude pathspec in `netlify.toml`.** A first attempt used
+`git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude,glob)*.md'` directly as the
+`ignore` value. It works in a local shell and fails in Netlify CI: the pathspec is mangled
+between TOML and the shell, git reports **no differences at all**, and every deploy is
+silently skipped -- including real source changes. Verified by probe on 2026-09-04: a plain
+two-ref diff builds correctly; the same diff with an inline exclude pathspec skips a real
+source change. The failure mode is invisible -- builds just quietly stop.
 
-- **Quote `$CACHED_COMMIT_REF`, and check it before use.** Unquoted and empty (which is what
-  a cold cache gives you), `git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- .` collapses
-  into a *working-tree* diff -- always empty in CI -- returns 0, and silently skips **every**
-  deploy. It fails closed, not open. Hence the leading `test -z ... && exit 1`.
-- **Use `:(exclude,glob)*.md`, never `:(exclude)*.md`.** Plain `:(exclude)` matches at any
-  depth and will swallow nested files the site actually ships, skipping builds that matter.
-  The `glob` magic stops `*` from crossing `/`.
-- **Validate after editing.** `netlify build --dry` parses `netlify.toml` and catches malformed
-  TOML before CI does.
+Rules that follow:
 
-`ignore` only works with Netlify's **native Git integration**. It does *not* cancel builds
-triggered by a build hook -- a repo wired through a GitHub Action + build hook needs
-`[skip netlify]` commit tokens instead.
+- **Keep the logic in `scripts/netlify-ignore.sh`.** Plain filename matching, no pathspec magic.
+- **Fail open.** Missing refs or a git error must exit non-zero (build). A guard that fails
+  closed stops all deploys with no error anywhere.
+- **`ignore` only works with Netlify's native Git integration.** It does *not* cancel builds
+  triggered by a build hook; those need `[skip netlify]` commit tokens instead.
 
-Canceled and failed builds cost **0 credits** -- only a *successful production deploy* is
-metered. "Canceled build due to no content change" is normal and desirable: identical output
-means no redeploy and no charge, and the previous deploy correctly keeps the Published badge.
+Canceled and failed builds cost **0 credits** -- only a successful production deploy is
+metered. "Canceled build due to no content change" is normal: identical output means no
+redeploy and no charge, and the previous deploy correctly keeps the Published badge.

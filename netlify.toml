@@ -1,12 +1,8 @@
 [build]
-  # Skip the build when a commit touches nothing the site ships (root-level
-  # docs, .claude/). Exit 0 = skip, non-zero = build.
-  #
-  # CACHED_COMMIT_REF must be quoted AND checked: on a build with no warm
-  # cache it is empty, and an unquoted empty ref degenerates into a
-  # working-tree diff, which is always empty in CI and would silently skip
-  # every deploy. Empty => exit 1 so the build always proceeds.
-  ignore = '''test -z "$CACHED_COMMIT_REF" && exit 1; git diff --quiet "$CACHED_COMMIT_REF" "$COMMIT_REF" -- . ':(exclude,glob)*.md' ':(exclude).claude/' '''
+  # Skips docs-only commits; see scripts/netlify-ignore.sh for why the logic
+  # lives in a script rather than inline (inline exclude pathspecs silently
+  # skip every deploy).
+  ignore = "bash scripts/netlify-ignore.sh"
   command = "npm run build"
   publish = "dist"
 
