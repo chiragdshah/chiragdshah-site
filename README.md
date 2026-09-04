@@ -97,6 +97,9 @@ Rules that follow:
 - **Keep the logic in `scripts/netlify-ignore.sh`.** Plain filename matching, no pathspec magic.
 - **Fail open.** Missing refs or a git error must exit non-zero (build). A guard that fails
   closed stops all deploys with no error anywhere.
+- **A cold cache hands back `CACHED_COMMIT_REF` == `COMMIT_REF`.** Any diff between them is
+  empty, so a naive guard skips. The script tests for equality and builds. This hit four
+  sites at once on 2026-09-04 -- all whose last successful build was months old.
 - **`ignore` only works with Netlify's native Git integration.** It does *not* cancel builds
   triggered by a build hook; those need `[skip netlify]` commit tokens instead.
 
