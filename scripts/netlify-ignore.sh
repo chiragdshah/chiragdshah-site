@@ -17,6 +17,12 @@ set -u
 [ -z "${CACHED_COMMIT_REF:-}" ] && exit 1
 [ -z "${COMMIT_REF:-}" ] && exit 1
 
+# Cold cache: Netlify hands back CACHED_COMMIT_REF == COMMIT_REF, so any diff
+# between them is empty and a naive guard skips the build. Observed 2026-09-04
+# on four sites whose last successful build was months old -- all four silently
+# skipped a commit that touched netlify.toml and scripts/. Build instead.
+[ "$CACHED_COMMIT_REF" = "$COMMIT_REF" ] && exit 1
+
 changed=$(git diff --name-only "$CACHED_COMMIT_REF" "$COMMIT_REF") || exit 1
 [ -z "$changed" ] && exit 0
 
