@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import { useRef, type ReactElement } from "react";
 import { motion } from "framer-motion";
 import { SketchedPortrait } from "../components/SketchedPortrait";
 
@@ -155,6 +155,8 @@ const tiles: Tile[] = [
 ];
 
 export function MobileCard() {
+  const qrDialog = useRef<HTMLDialogElement>(null);
+
   return (
     <section
       id="mobile-card"
@@ -230,6 +232,41 @@ export function MobileCard() {
         })}
       </motion.div>
 
+      <motion.button
+        type="button"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.56 }}
+        onClick={() => qrDialog.current?.showModal()}
+        className="mt-5 font-hand text-sm text-brown-accent underline decoration-brown-accent/40 underline-offset-4"
+      >
+        Show QR code to share
+      </motion.button>
+
+      <dialog
+        ref={qrDialog}
+        aria-label="QR code for this card"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) e.currentTarget.close();
+        }}
+        className="w-[min(340px,calc(100vw-32px))] rounded-2xl bg-cream-50 p-6 text-center text-brown backdrop:bg-black/55"
+      >
+        <img
+          src="/qr.svg"
+          alt="QR code linking to chiragdshah.com"
+          width={280}
+          height={280}
+          className="mx-auto w-full rounded-lg bg-white p-2"
+        />
+        <p className="mt-4 font-body text-[15px] text-brown/70">
+          Scan to open this card
+        </p>
+        <form method="dialog">
+          <button className="mt-2 font-hand text-sm text-brown-accent underline underline-offset-4">
+            Close
+          </button>
+        </form>
+      </dialog>
     </section>
   );
 }
