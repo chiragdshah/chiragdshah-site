@@ -49,7 +49,7 @@ const UTM = "utm_source=chiragdshah&utm_medium=referral";
 const actions: { label: string; href: string; Icon: Icon; external?: boolean; primary?: boolean }[] = [
   { label: "Save contact", href: "/chirag-shah.vcf", Icon: ContactIcon, primary: true },
   { label: "Email", href: "mailto:chirag@crestwood.digital", Icon: MailIcon },
-  { label: "Book a call", href: "https://calendly.com/chirag-crestwood/30min", Icon: CalendarIcon, external: true },
+  { label: "Book a call", href: "https://cal.com/chiragdshah/intro", Icon: CalendarIcon, external: true },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/chiragdshah/", Icon: LinkedInIcon, external: true },
 ];
 
