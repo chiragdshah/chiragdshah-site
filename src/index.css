@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Crestwood brand, matching crestwood.digital and the 2026 business card */
+@font-face { font-family: "Crestwood Display"; src: url("/fonts/CrestwoodDisplay-Book.woff2") format("woff2"); font-weight: 100 500; font-display: swap; }
+@font-face { font-family: "Crestwood Display"; src: url("/fonts/CrestwoodDisplay-Bold.woff2") format("woff2"); font-weight: 600 900; font-display: swap; }
+.cw-card { background: #020617; font-family: Inter, system-ui, sans-serif; color: #fff; }
+.cw-display { font-family: "Crestwood Display", Inter, sans-serif; font-feature-settings: "ss01"; }
+.cw-mono { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; font-weight: 600; }
+/* the Crestwood mark, faint, off the top-right corner (as on the business card) */
+.cw-mark { position: absolute; width: 620px; height: 620px; right: -260px; top: -240px; opacity: .14; pointer-events: none;
+  background: url("/brand/crestwood-mark-orange.svg") center / contain no-repeat; }
+
 @layer base {
   html,
   body,
@@ -18,7 +28,7 @@
   }
 
   html {
-    background: #f8f5f2;
+    background: #020617;
   }
 
   h1,
