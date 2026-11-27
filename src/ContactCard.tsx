@@ -38,6 +38,11 @@ const LinkedInIcon: Icon = ({ className }) => (
     <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.5h4V21H3V9.5Zm6 0h3.8v1.6h.05c.53-.96 1.83-1.97 3.77-1.97 4.03 0 4.78 2.55 4.78 5.86V21H17.6v-5.2c0-1.24-.02-2.84-1.84-2.84-1.85 0-2.13 1.35-2.13 2.75V21H9V9.5Z" />
   </svg>
 );
+const XIcon: Icon = ({ className }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+    <path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.2h1.7L7.4 4.73H5.58L16.67 19.2Z" />
+  </svg>
+);
 const ArrowIcon: Icon = ({ className }) => (
   <svg viewBox="0 0 24 24" className={className} aria-hidden>
     <path d="M5 12h14M13 6l6 6-6 6" {...stroke} />
@@ -51,6 +56,7 @@ const actions: { label: string; href: string; Icon: Icon; external?: boolean; pr
   { label: "Email", href: "mailto:chirag@crestwood.digital", Icon: MailIcon },
   { label: "Book a call", href: "https://cal.com/chiragdshah/intro", Icon: CalendarIcon, external: true },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/chiragdshah/", Icon: LinkedInIcon, external: true },
+  { label: "X", href: "https://x.com/chiragdshah", Icon: XIcon, external: true },
 ];
 
 const rise = (delay: number) => ({
@@ -95,7 +101,7 @@ export function ContactCard() {
             className={
               "flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition active:translate-y-0.5 " +
               (primary
-                ? "bg-[#ea580c] text-white shadow-lg shadow-[#ea580c]/20 hover:bg-[#c2410c]"
+                ? "col-span-2 bg-[#ea580c] text-white shadow-lg shadow-[#ea580c]/20 hover:bg-[#c2410c]"
                 : "border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10")
             }
           >
